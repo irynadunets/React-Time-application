@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Add React in One Minute</title>
+    <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+  const INTERVAL = 100;
+
+  class Timer extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {value: 0};
+    }
+
+    increment(){
+      this.setState({value: this.state.value + 1});
+    }
+
+    componentDidMount() {
+      this.timerID = setInterval(() => this.increment(), 1000/INTERVAL);
+    }
+
+    componentWillUnmount() {
+      clearInterval(this.timerID);
+    }
+
+    render() {
+      const value = this.state.value
+      return (
+        <div>
+          <p class="alert alert-secondary">Таймер:</p>
+          <p>
+            <span class="badge badge-secondary">{Math.round(value/INTERVAL/60/60)} : </span>
+            <span class="badge badge-secondary">{Math.round(value/INTERVAL/60)} : </span>
+            <span class="badge badge-secondary">{Math.round(value/INTERVAL)} . </span>
+            <span class="badge badge-secondary">{value % INTERVAL}</span>
+          </p>
+        </div>
+      );
+    }
+  }
+  ReactDOM.render(<Timer/>, document.getElementById('root'));
+    </script>
+  </body>
+</html>
